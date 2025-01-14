@@ -3,9 +3,9 @@
 * [Task Description](./references/task_description.md)
 * [Planing Notes](./references/planning.md)
 
-## Commands
+## Environment setup
 
-To to prepare dev env run
+Run:
 ```
 make venv
 ```
