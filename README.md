@@ -47,4 +47,4 @@ Naming convention is a number (for ordering), the creator's initials, and a shor
 
 ## Branching Strategy
 
-TBD
+Branch per feature. Name: dev/{initials}/{feature_name}
