@@ -53,6 +53,8 @@
 
 1. Technique Classification: 
     * Stepanchuk D
+    * Oleksii Nakhod
+    * Bodya Yarinko
 1. Span Identification:
     * Олександр М (BERT multilingual)
 
