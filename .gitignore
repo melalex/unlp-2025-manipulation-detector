@@ -7,3 +7,4 @@
 __pycache__
 *.log
 .DS_Store
+/reports/span-detection/test-visualization
