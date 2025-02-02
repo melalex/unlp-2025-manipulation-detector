@@ -1,13 +1,14 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
 from pathlib import Path
 from transformers import PreTrainedTokenizerBase, BertTokenizerFast
-from datasets import Dataset, load_dataset
+from datasets import load_dataset, DatasetDict
 
 
 class ManipulationDetectionDataset:
 
     __tokenizer: BertTokenizerFast
+    __raw_path: Path
+    __processed_path: Path
+    __train_ratio: float = 0.9
     __seed: int
     __label2id = {
         "O": 0,
@@ -15,8 +16,18 @@ class ManipulationDetectionDataset:
     }
     __id2label = {v: k for k, v in __label2id.items()}
 
-    def __init__(self, tokenizer: PreTrainedTokenizerBase, seed: int = 42):
+    def __init__(
+        self,
+        tokenizer: PreTrainedTokenizerBase,
+        raw_path: Path,
+        processed_path: Path,
+        train_ratio: float = 0.9,
+        seed: int = 42,
+    ):
         self.__tokenizer = tokenizer
+        self.__raw_path = raw_path
+        self.__processed_path = processed_path
+        self.__train_ratio = train_ratio
         self.__seed = seed
 
     @property
@@ -27,12 +38,26 @@ class ManipulationDetectionDataset:
     def id2label(self):
         return self.__id2label
 
-    def read(self, ds_path: Path, train_ratio: float = 0.9):
-        dataset = load_dataset("parquet", split="train", data_files=str(ds_path))
-        dataset = dataset.shuffle(self.__seed)
-        dataset = dataset.train_test_split(train_size=train_ratio)
+    def read(self):
+        if self.__processed_path.exists():
+            return DatasetDict.load_from_disk(self.__processed_path)
 
-        return dataset.map(self.__encode_labels, batched=True)
+        ds = self.__load_ds()
+        ds.save_to_disk(self.__processed_path)
+
+        return ds
+
+    def __load_ds(self):
+        dataset = load_dataset(
+            "parquet", split="train", data_files=str(self.__raw_path)
+        )
+        dataset = dataset.shuffle(self.__seed)
+        dataset = dataset.train_test_split(train_size=self.__train_ratio)
+        dataset = dataset.map(self.__encode_labels, batched=True)
+
+        return dataset.remove_columns(
+            ["lang", "manipulative", "techniques", "trigger_words"]
+        )
 
     def __encode_labels(self, data):
         tokenized_inputs = self.__tokenizer(
