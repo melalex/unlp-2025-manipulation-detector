@@ -16,6 +16,20 @@ def plot_loss(trainer, size=(12, 6)) -> None:
     plt.legend()
     plt.show()
 
+def plot_eval_loss(trainer, size=(12, 6)) -> None:
+    history = trainer.state.log_history
+
+    plt.figure(figsize=size)
+    plt.plot(
+        [it["eval_loss"] for it in history if "eval_loss" in it],
+        label="Validation Loss",
+    )
+    plt.title("Validation Loss")
+    plt.xlabel("Step")
+    plt.ylabel("Loss")
+    plt.legend()
+    plt.show()
+
 
 def plot_model_progress(full_report, size=(12, 6)):
     plt.figure(figsize=size)
