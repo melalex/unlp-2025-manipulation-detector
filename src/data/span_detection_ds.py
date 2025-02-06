@@ -12,7 +12,7 @@ class ManipulationDetectionDataset:
     __seed: int
     __label2id = {
         "O": 0,
-        "MANIPULATION": 1,
+        "I-MANIPULATION": 1,
     }
     __id2label = {v: k for k, v in __label2id.items()}
 
