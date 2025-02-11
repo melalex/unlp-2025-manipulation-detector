@@ -10,6 +10,7 @@ class ManipulationDetectionDataset:
     __processed_path: Path
     __train_ratio: float = 0.9
     __seed: int
+    __lang: str
     __label2id = {
         "O": 0,
         "I-MANIPULATION": 1,
@@ -23,12 +24,14 @@ class ManipulationDetectionDataset:
         processed_path: Path,
         train_ratio: float = 0.9,
         seed: int = 42,
+        lang: str = None,
     ):
         self.__tokenizer = tokenizer
         self.__raw_path = raw_path
         self.__processed_path = processed_path
         self.__train_ratio = train_ratio
         self.__seed = seed
+        self.__lang = lang
 
     @property
     def label2id(self):
@@ -54,6 +57,9 @@ class ManipulationDetectionDataset:
         dataset = dataset.shuffle(self.__seed)
         dataset = dataset.train_test_split(train_size=self.__train_ratio)
         dataset = dataset.map(self.__encode_labels, batched=True)
+
+        if self.__lang is not None:
+            dataset = dataset.filter(lambda it: it["lang"] == self.__lang)
 
         return dataset.remove_columns(
             ["lang", "manipulative", "techniques", "trigger_words"]
