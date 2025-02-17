@@ -11,6 +11,7 @@ class ManipulationDetectionDataset:
     __train_ratio: float = 0.9
     __seed: int
     __lang: str
+
     __label2id = {
         "O": 0,
         "I-MANIPULATION": 1,
