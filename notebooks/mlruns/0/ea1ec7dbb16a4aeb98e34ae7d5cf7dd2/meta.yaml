@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/ea1ec7dbb16a4aeb98e34ae7d5cf7dd2/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ea1ec7dbb16a4aeb98e34ae7d5cf7dd2
+run_name: mdeberta-v3-base
+run_uuid: ea1ec7dbb16a4aeb98e34ae7d5cf7dd2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739996247409
+status: 1
+tags: []
+user_id: Vitalii

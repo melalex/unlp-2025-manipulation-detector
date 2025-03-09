@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/f4e5e6bd7a96440eb82ac8ba13172453/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f4e5e6bd7a96440eb82ac8ba13172453
+run_name: (xlm-roberta-base)YaraKyrychenko/ukraine-war-pov
+run_uuid: f4e5e6bd7a96440eb82ac8ba13172453
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739989909196
+status: 1
+tags: []
+user_id: Vitalii

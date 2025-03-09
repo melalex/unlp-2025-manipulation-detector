@@ -15,20 +15,27 @@ class ManipulationDetectionDataset:
         "I-MANIPULATION": 1,
     }
     __id2label = {v: k for k, v in __label2id.items()}
-
+    __exclude_tail: bool = True
+    __load_existing: bool = False
     def __init__(
         self,
         tokenizer: PreTrainedTokenizerBase,
         raw_path: Path,
         processed_path: Path,
+        exclude_tail: bool = True,
         train_ratio: float = 0.9,
         seed: int = 42,
+        load_existing: bool = False,
+        do_split: bool = True,
     ):
         self.__tokenizer = tokenizer
         self.__raw_path = raw_path
         self.__processed_path = processed_path
+        self.__exclude_tail = exclude_tail
         self.__train_ratio = train_ratio
         self.__seed = seed
+        self.__load_existing = load_existing
+        self.__do_split = do_split
 
     @property
     def label2id(self):
@@ -39,11 +46,11 @@ class ManipulationDetectionDataset:
         return self.__id2label
 
     def read(self):
-        if self.__processed_path.exists():
-            return DatasetDict.load_from_disk(self.__processed_path)
+        if self.__processed_path.exists() and self.__load_existing:
+            return DatasetDict.load_from_disk(str(self.__processed_path))
 
         ds = self.__load_ds()
-        ds.save_to_disk(self.__processed_path)
+        ds.save_to_disk(str(self.__processed_path))
 
         return ds
 
@@ -52,12 +59,12 @@ class ManipulationDetectionDataset:
             "parquet", split="train", data_files=str(self.__raw_path)
         )
         dataset = dataset.shuffle(self.__seed)
-        dataset = dataset.train_test_split(train_size=self.__train_ratio)
-        dataset = dataset.map(self.__encode_labels, batched=True)
+        if self.__do_split:
+            dataset = dataset.train_test_split(train_size=self.__train_ratio, seed=self.__seed)
 
-        return dataset.remove_columns(
-            ["lang", "manipulative", "techniques", "trigger_words"]
-        )
+        dataset = dataset.map(self.__encode_labels, batched=True, remove_columns=["lang", "manipulative", "techniques", "trigger_words"])
+
+        return dataset
 
     def __encode_labels(self, data):
         tokenized_inputs = self.__tokenizer(
@@ -81,8 +88,12 @@ class ManipulationDetectionDataset:
             previous_word_id = None
 
             for j, id in enumerate(word_ids):
-                if id is None or id == previous_word_id:
-                    example_labels[j] = -100
+                if self.__exclude_tail:
+                    if id is None or id == previous_word_id:
+                        example_labels[j] = -100
+                else:
+                    if id is None:
+                        example_labels[j] = -100
                 previous_word_id = id
 
             labels.append(example_labels)
