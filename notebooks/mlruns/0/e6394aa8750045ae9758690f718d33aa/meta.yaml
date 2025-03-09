@@ -1,0 +1,16 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/e6394aa8750045ae9758690f718d33aa/artifacts
+deleted_time: 1739987739156
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: e6394aa8750045ae9758690f718d33aa
+run_name: xlm-roberta-base-ukrainian-ner-ukrner
+run_uuid: e6394aa8750045ae9758690f718d33aa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1739986416727
+status: 1
+tags: []
+user_id: Vitalii

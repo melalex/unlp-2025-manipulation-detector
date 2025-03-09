@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/f93444bc42b04d8994a70fdbbcbf3f94/artifacts
+end_time: 1740670262204
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f93444bc42b04d8994a70fdbbcbf3f94
+run_name: google-bert/bert-base-multilingual-cased
+run_uuid: f93444bc42b04d8994a70fdbbcbf3f94
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740669899906
+status: 3
+tags: []
+user_id: Vitalii

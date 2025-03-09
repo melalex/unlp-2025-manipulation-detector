@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/0d494cace8a6498f969653e61ce5c953/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0d494cace8a6498f969653e61ce5c953
+run_name: dardem/xlm-roberta-large-uk-toxicity-1741104548-fold-0
+run_uuid: 0d494cace8a6498f969653e61ce5c953
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741104769249
+status: 1
+tags: []
+user_id: Vitalii
