@@ -51,12 +51,11 @@ def compute_metrics(dataset_blueprint):
             'token_f1': token_metrics['token_f1'],
             'token_precision': token_metrics['token_precision'],
             'token_recall': token_metrics['token_recall'],
-            'token_accuracy': token_metrics['token_accuracy'],
             # Span-level metrics
             'span_f1': results['overall_f1'],
             'span_precision': results['overall_precision'],
             'span_recall': results['overall_recall'],
-            'span_accuracy': results['overall_accuracy'],
+            'accuracy': results['overall_accuracy'],
         }
     
     return compute_internal
@@ -107,5 +106,4 @@ def evaluate_tokens(y_true, y_pred):
         'token_f1': report['I-MANIPULATION']['f1-score'],
         'token_precision': report['I-MANIPULATION']['precision'],
         'token_recall': report['I-MANIPULATION']['recall'],
-        'token_accuracy': report['accuracy'],
     }

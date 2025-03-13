@@ -27,6 +27,7 @@ class ManipulationDetectionDataset:
         seed: int = 42,
         load_existing: bool = False,
         do_split: bool = True,
+        lang: str = None
     ):
         self.__tokenizer = tokenizer
         self.__raw_path = raw_path
@@ -36,6 +37,7 @@ class ManipulationDetectionDataset:
         self.__seed = seed
         self.__load_existing = load_existing
         self.__do_split = do_split
+        self.__lang = lang
 
     @property
     def label2id(self):
@@ -61,9 +63,13 @@ class ManipulationDetectionDataset:
         dataset = dataset.shuffle(self.__seed)
         if self.__do_split:
             dataset = dataset.train_test_split(train_size=self.__train_ratio, seed=self.__seed)
+            
+        if self.__lang:
+            dataset = dataset.filter(lambda x: x["lang"] == self.__lang)
 
         dataset = dataset.map(self.__encode_labels, batched=True, remove_columns=["lang", "manipulative", "techniques", "trigger_words"])
 
+            
         return dataset
 
     def __encode_labels(self, data):
