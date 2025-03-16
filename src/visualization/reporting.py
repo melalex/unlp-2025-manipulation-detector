@@ -39,3 +39,42 @@ class EvaluatingReport:
             self.__path,
             names=self.__report_columns,
         )
+
+class EvaluatingReport_new:
+
+    __report_columns = [
+        "timestamp",
+        "eval_loss",
+        "eval_token_precision",
+        "eval_token_recall",
+        "eval_token_f1",
+        "eval_token_accuracy",
+        "eval_span_precision",
+        "eval_span_recall",
+        "eval_span_f1",
+        "eval_span_accuracy",
+        "eval_runtime",
+        "eval_samples_per_second",
+        "eval_steps_per_second",
+        "epoch",
+    ]
+
+    __path: Path
+
+    def __init__(self, path):
+        self.__path = path
+
+    def write_to_report(self, output, now):
+        os.makedirs(os.path.dirname(self.__path), exist_ok=True)
+
+        row = [now] + [output[col] for col in self.__report_columns[1:]]
+
+        with open(self.__path, "a") as the_file:
+            writer = csv.writer(the_file)
+            writer.writerow(row)
+
+    def read_report(self):
+        return pd.read_csv(
+            self.__path,
+            names=self.__report_columns,
+        )
