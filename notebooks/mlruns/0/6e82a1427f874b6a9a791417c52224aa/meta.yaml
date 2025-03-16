@@ -1,0 +1,15 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/6e82a1427f874b6a9a791417c52224aa/artifacts
+end_time: 1741805819097
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 6e82a1427f874b6a9a791417c52224aa
+run_name: xlm-roberta-base-ukrainian-ner-ukrner-nofreeze-2025-03-12_20-48-32
+run_uuid: 6e82a1427f874b6a9a791417c52224aa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741805376415
+status: 3
+tags: []
+user_id: Vitalii
