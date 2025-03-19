@@ -1,8 +1,9 @@
 artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/5276802d380943afa118a06c1e4680a2/artifacts
+deleted_time: 1742394506355
 end_time: null
 entry_point_name: ''
 experiment_id: '0'
-lifecycle_stage: active
+lifecycle_stage: deleted
 run_id: 5276802d380943afa118a06c1e4680a2
 run_name: tmp_trainer
 run_uuid: 5276802d380943afa118a06c1e4680a2
