@@ -1,43 +1,41 @@
-from pathlib import Path
 from bs4 import BeautifulSoup
 from datasets import load_dataset, Dataset
 import multiprocessing
 
-import torch
 
-
-def load_ukrainian_news_dataset(cache_folder, original_cache_folder, tokenizer, rows_count, max_tokens=512):
+def load_ukrainian_news_dataset(
+    tokenizer,
+    rows_count=None,
+    max_tokens=512,
+):
     def remove_html_tags(example):
         soup = BeautifulSoup(example["text"], "html.parser")
         return {"text": soup.get_text()}
 
     def preprocess_function(examples):
-        return tokenizer(
-            examples["text"],
-            truncation=True,
-            max_length=max_tokens,
-        )
+        return tokenizer(examples["text"], truncation=False)
 
-    cache_path = cache_folder / "ukrainian-news"
+    def filter_long_examples(example):
+        return len(example["input_ids"]) <= max_tokens
 
-    if cache_path.exists():
-        return Dataset.load_from_disk(cache_path)
+    def filter_out_telegram_posts(example):
+        return not example["url"].startswith("https://t.me")
 
     core_count = multiprocessing.cpu_count()
 
-    cache_folder.mkdir(parents=True, exist_ok=True)
-    original_cache_folder.mkdir(parents=True, exist_ok=True)
+    split = f"train[:{rows_count}]" if rows_count is not None else "train"
 
-    dataset = load_dataset(
+    ds = load_dataset(
         "zeusfsx/ukrainian-news",
-        split=f"train[:{rows_count}]",
-        cache_dir=original_cache_folder,
+        split=split,
         num_proc=core_count,
     )
-    dataset = dataset.select_columns(["text"])
-    dataset = dataset.map(remove_html_tags, num_proc=core_count)
-    dataset = dataset.map(preprocess_function, remove_columns=["text"], num_proc=core_count, batched=True)
+    ds = ds.filter(filter_out_telegram_posts)
+    ds = ds.select_columns(["text"])
+    ds = ds.map(remove_html_tags, num_proc=core_count)
+    ds = ds.map(
+        preprocess_function, remove_columns=["text"], num_proc=core_count, batched=True
+    )
+    ds = ds.filter(filter_long_examples)
 
-    dataset.save_to_disk(cache_path)
-
-    return dataset
+    return ds

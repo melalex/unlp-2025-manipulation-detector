@@ -69,3 +69,11 @@ def unzip_file(
 def submit_competition(path, message, competition):
     kaggle.api.authenticate()
     kaggle.api.competition_submit(path, message, competition)
+
+
+def submit_df_competition(df, submission_path, message, competition):
+    submission_path.parent.mkdir(parents=True, exist_ok=True)
+
+    df.to_csv(submission_path, index=False)
+
+    submit_competition(submission_path, message, competition)
