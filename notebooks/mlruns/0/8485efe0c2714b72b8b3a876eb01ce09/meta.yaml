@@ -1,0 +1,16 @@
+artifact_uri: file:///c:/Users/Vitalii/Desktop/5_course/UNLP/unlp-2025-manipulation-detector/notebooks/mlruns/0/8485efe0c2714b72b8b3a876eb01ce09/artifacts
+deleted_time: 1742394506364
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 8485efe0c2714b72b8b3a876eb01ce09
+run_name: c:\Users\Vitalii\Desktop\5_course\UNLP\unlp-2025-manipulation-detector\notebooks\..\models\span-detection-xlm-roberta-base-ukrainian-ner-ukrner-checkpoint
+run_uuid: 8485efe0c2714b72b8b3a876eb01ce09
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1742384546513
+status: 1
+tags: []
+user_id: Vitalii
