@@ -1,4 +1,7 @@
+import ast
 from pathlib import Path
+import re
+import numpy as np
 from transformers import PreTrainedTokenizerBase, BertTokenizerFast
 from datasets import load_dataset, DatasetDict
 
@@ -63,13 +66,12 @@ class ManipulationDetectionDataset:
         dataset = dataset.shuffle(self.__seed)
         if self.__do_split:
             dataset = dataset.train_test_split(train_size=self.__train_ratio, seed=self.__seed)
-            
+
         if self.__lang:
             dataset = dataset.filter(lambda x: x["lang"] == self.__lang)
 
         dataset = dataset.map(self.__encode_labels, batched=True, remove_columns=["lang", "manipulative", "techniques", "trigger_words"])
 
-            
         return dataset
 
     def __encode_labels(self, data):
@@ -78,6 +80,7 @@ class ManipulationDetectionDataset:
             truncation=True,
             return_offsets_mapping=True,
         )
+
         labels = []
 
         for i, offsets in enumerate(tokenized_inputs["offset_mapping"]):
